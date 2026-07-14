@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* NOTE: sandbox has no access to Google Fonts. These fall back to
+     close system equivalents. On deploy, swap in next/font/google:
+     Space Grotesk (display), Inter (sans), JetBrains Mono (mono) —
+     see the commented block in app/layout.tsx history / README. */
+  --font-display: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "SF Mono", "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --color-navy-950: #060f1a;
+  --color-navy-900: #0a1e33;
+  --color-navy-800: #0f2a45;
+  --color-navy-700: #163a5c;
+  --color-navy-600: #1d4d78;
+
+  --color-steel-100: #eef1f3;
+  --color-steel-200: #dde2e6;
+  --color-steel-300: #b9c2ca;
+  --color-steel-400: #8b96a1;
+  --color-steel-500: #647180;
+  --color-steel-600: #4a5a68;
+  --color-steel-700: #384552;
+
+  --color-fog-50: #f8f9fa;
+  --color-fog-100: #f3f5f7;
+  --color-fog-200: #e8ebee;
+
+  --color-signal-500: #e8600c;
+  --color-signal-600: #cc5209;
+  --color-signal-700: #a84508;
+
+  --color-white: #ffffff;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scan: scan 6s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+}
+
+:root {
+  --background: var(--color-white);
+  --foreground: var(--color-navy-900);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.dark {
+  --background: var(--color-navy-950);
+  --foreground: var(--color-white);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: var(--color-signal-500);
+  color: white;
+}
+
+/* blueprint grid overlay utility */
+.bp-grid {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bp-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(10,30,51,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10,30,51,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* corner brackets - technical drawing crop marks */
+.bracket-corners {
+  position: relative;
+}
+.bracket-corners::before,
+.bracket-corners::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--color-signal-500);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.bracket-corners::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.bracket-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+.bracket-corners:hover::before,
+.bracket-corners:hover::after {
+  opacity: 1;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-fog-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-steel-400);
+  border-radius: 6px;
+}
